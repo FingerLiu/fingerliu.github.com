@@ -1,10 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Finger Liu Blog]]></title>
   <link href="http://FingerLiu.github.io/atom.xml" rel="self"/>
   <link href="http://FingerLiu.github.io/"/>
-  <updated>2013-05-22T21:45:53+08:00</updated>
+  <updated>2013-05-22T21:50:54+08:00</updated>
   <id>http://FingerLiu.github.io/</id>
   <author>
     <name><![CDATA[Finger Liu]]></name>
@@ -35,7 +35,7 @@
     <title type="html"><![CDATA[using octopress in china]]></title>
     <link href="http://FingerLiu.github.io/blog/2013/05/22/using-octopress-in-china/"/>
     <updated>2013-05-22T17:13:00+08:00</updated>
-    <id>http://FingerLiu.github.io/octopress-guide</id>
+    <id>http://FingerLiu.github.io/blog/2013/05/22/using-octopress-in-china</id>
     <content type="html"><![CDATA[
 ]]></content>
   </entry>
