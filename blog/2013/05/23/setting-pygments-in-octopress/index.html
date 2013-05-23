@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>setting pygments in octopress - Finger Liu Blog</title>
+  <meta name="author" content="Finger Liu">
+
+  
+  <meta name="description" content="pygments can&rsquo;t parse unknown language**的解决办法 问题 今天配置完octpopress准备开始博客，发现按照官网的说明根本就无法高亮显示代码。 于是我打开_config.yml发现在大概45行的地方是 pygments: false # &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://FingerLiu.github.io/blog/2013/05/23/setting-pygments-in-octopress">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Finger Liu Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Finger Liu Blog</a></h1>
+  
+    <h2>tech blog.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss email">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+    <li><a href="solo_o@foxmail.com" rel="subscribe-email" title="subscribe via email">Email</a></li>
+  
+</ul>
+  
+<form action="http://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:FingerLiu.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Setting Pygments in Octopress</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-23T09:50:00+08:00" pubdate data-updated="true">May 23<span>rd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>pygments can&rsquo;t parse unknown  language**的解决办法</h2>
+
+<h2>问题</h2>
+
+<p>今天配置完octpopress准备开始博客，发现按照官网的说明根本就无法高亮显示代码。</p>
+
+<br/>于是我打开_config.yml发现在大概45行的地方是  
+
+
+<p><code>pygments: false # default python pygments have been replaced by pygments.rb</code></p>
+
+<p>意思是说，python默认的pygments模块被pygments.rb替代了。于是我从plugins中找到pygments_code.rb看到如下代码</p>
+
+<figure class='code'><figcaption><span>pygments_code.rb python </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='rb'><span class='line'>
+</span><span class='line'>    <span class="n">lang</span> <span class="o">=</span> <span class="s1">&#39;ruby&#39;</span> <span class="k">if</span> <span class="n">lang</span> <span class="o">==</span> <span class="s1">&#39;ru&#39;</span>
+</span><span class='line'>    <span class="n">lang</span> <span class="o">=</span> <span class="s1">&#39;objc&#39;</span> <span class="k">if</span> <span class="n">lang</span> <span class="o">==</span> <span class="s1">&#39;m&#39;</span>
+</span><span class='line'>    <span class="n">lang</span> <span class="o">=</span> <span class="s1">&#39;perl&#39;</span> <span class="k">if</span> <span class="n">lang</span> <span class="o">==</span> <span class="s1">&#39;pl&#39;</span>
+</span><span class='line'>    <span class="n">lang</span> <span class="o">=</span> <span class="s1">&#39;yaml&#39;</span> <span class="k">if</span> <span class="n">lang</span> <span class="o">==</span> <span class="s1">&#39;yml&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>大概意思就是，它把你默认的python替换后，只识别上述几种语言。</p>
+
+<h2>解决方法</h2>
+
+<ol>
+<li><p>最简单的解决办法，放弃pygments,改用backitck_codelock过滤器，使用github最适用的代码高亮块。使用三个反引号将代码段包起来。使用方法如下： <br/>
+<code>``` [langue] [title] [link text] <br/>
+ code snippet <br/>
+ ```
+</code><br/>
+ 具体请参见<a href="http://xiongbupt.github.io/blog/2012/06/08/octopressdai-ma-gao-liang/">这篇博客</a>  。</p></li>
+<li><p>如果你的系统中安装了python的话，那么你就可以调用python自带的pygment。使用方法为将_config.yml中
+<code >pygments: false # default python pygments have been replaced by pygments.rb</code></p>
+
+<p>  的false改为true。这里需要注意的是，我在我的python27安装目录下找到了pygments，但在python3中并没有。所有建议安装python27后再进行这项修改。</p></li>
+</ol>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Finger Liu</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-23T09:50:00+08:00" pubdate data-updated="true">May 23<span>rd</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/octopress/'>octopress</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/05/22/searchhistory/" title="Previous Post: pySearchHis">&laquo; pySearchHis</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/05/23/setting-pygments-in-octopress/">Setting Pygments in Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/22/searchhistory/">pySearchHis</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/22/using-octopress-in-china/">Using Octopress in China</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Finger Liu -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

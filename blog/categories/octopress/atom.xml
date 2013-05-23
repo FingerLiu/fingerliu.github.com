@@ -4,7 +4,7 @@
   <title><![CDATA[Category: octopress | Finger Liu Blog]]></title>
   <link href="http://FingerLiu.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://FingerLiu.github.io/"/>
-  <updated>2013-05-23T09:41:46+08:00</updated>
+  <updated>2013-05-23T10:52:12+08:00</updated>
   <id>http://FingerLiu.github.io/</id>
   <author>
     <name><![CDATA[Finger Liu]]></name>
@@ -12,6 +12,63 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[setting pygments in octopress]]></title>
+    <link href="http://FingerLiu.github.io/blog/2013/05/23/setting-pygments-in-octopress/"/>
+    <updated>2013-05-23T09:50:00+08:00</updated>
+    <id>http://FingerLiu.github.io/blog/2013/05/23/setting-pygments-in-octopress</id>
+    <content type="html"><![CDATA[<h2>pygments can&rsquo;t parse unknown  language**的解决办法</h2>
+
+<h2>问题</h2>
+
+<p>今天配置完octpopress准备开始博客，发现按照官网的说明根本就无法高亮显示代码。</p>
+
+<br/>于是我打开_config.yml发现在大概45行的地方是  
+
+
+<p><code>pygments: false # default python pygments have been replaced by pygments.rb</code></p>
+
+<p>意思是说，python默认的pygments模块被pygments.rb替代了。于是我从plugins中找到pygments_code.rb看到如下代码  <br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>pygments_code.rb python </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='rb'><span class='line'><span class="o">&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;pre&gt;&lt;code&gt;lang = &#39;ruby&#39; if lang == &#39;ru&#39;</span>
+</span><span class='line'><span class="sr">lang = &#39;objc&#39; if lang == &#39;m&#39;</span>
+</span><span class='line'><span class="sr">lang = &#39;perl&#39; if lang == &#39;pl&#39;</span>
+</span><span class='line'><span class="sr">lang = &#39;yaml&#39; if lang == &#39;yml&#39;</span>
+</span><span class='line'><span class="sr">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;</span><span class="sr">/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;p&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+大概意思就是，它把你默认的python替换后，只识别上述几种语言。</p>
+
+<h2>解决方法</h2>
+
+<ol>
+<li><p>最简单的解决办法，放弃pygments,改用backitck_codelock过滤器，使用github最适用的代码高亮块。使用三个反引号将代码段包起来。使用方法如下： <br/>
+<code>``` [langue] [title] [link text] <br/>
+ code snippet <br/>
+ ```
+</code><br/>
+ 具体请参见<a href="http://xiongbupt.github.io/blog/2012/06/08/octopressdai-ma-gao-liang/">这篇博客</a>  。</p></li>
+<li><p>如果你的系统中安装了python的话，那么你就可以调用python自带的pygment。使用方法为将_config.yml中
+<code >pygments: false # default python pygments have been replaced by pygments.rb</code></p>
+
+<p>  的false改为true。这里需要注意的是，我在我的python27安装目录下找到了pygments，但在python3中并没有。所有建议安装python27后再进行这项修改。</p></li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[using octopress in china]]></title>
