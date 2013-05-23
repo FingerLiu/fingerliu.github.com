@@ -9,12 +9,29 @@
   <meta name="author" content="Finger Liu">
 
   
-  <meta name="description" content="* coding: utf-8 * 2013/4/1 通过hook键盘和鼠标，记录搜索历史记录（hook鼠标还存在问题）
+  <meta name="description" content="通过hook键盘和鼠标，记录搜索历史记录（hook鼠标还存在问题）
 先只考虑用使用google chrome ，百度搜索的情况
-需要安装pyHook 和 pywin32
-全局变量，用来存放上次搜索结果
-搜索记录保存到文件
-和C语言一样， &hellip;">
+需要安装pyHook 和 pywin32 searchHis1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,7 +93,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/05/22/searchhistory/">searchHistory</a></h1>
+      <h1 class="entry-title"><a href="/blog/2013/05/22/searchhistory/">pySearchHis</a></h1>
     
     
       <p class="meta">
@@ -99,16 +116,136 @@
   </header>
 
 
-  <div class="entry-content"><h1><em>*</em> coding: utf-8 <em>*</em></h1>
-
-<h1>2013/4/1</h1>
-
-<p>通过hook键盘和鼠标，记录搜索历史记录（hook鼠标还存在问题）
+  <div class="entry-content"><p>通过hook键盘和鼠标，记录搜索历史记录（hook鼠标还存在问题）
 先只考虑用使用google chrome ，百度搜索的情况
-需要安装pyHook 和 pywin32
-全局变量，用来存放上次搜索结果
-搜索记录保存到文件
-和C语言一样，打开文件后一定记得关闭</p>
+需要安装pyHook 和 pywin32</p>
+
+<figure class='code'><figcaption><span>searchHis</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># _*_ coding: utf-8 _*_</span>
+</span><span class='line'><span class="c">#2013/4/1</span>
+</span><span class='line'><span class="c">#通过hook键盘和鼠标，记录搜索历史记录（hook鼠标还存在问题） </span>
+</span><span class='line'><span class="c">#先只考虑用使用google chrome ，百度搜索的情况</span>
+</span><span class='line'><span class="c">#需要安装pyHook 和 pywin32</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">pyHook</span><span class="o">,</span><span class="nn">pythoncom</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">sys</span>
+</span><span class='line'><span class="n">impor</span> <span class="n">win32api</span>
+</span><span class='line'><span class="c">#全局变量，用来存放上次搜索结果</span>
+</span><span class='line'><span class="n">preRes</span> <span class="o">=</span> <span class="s">&#39;solo&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">#搜索记录保存到文件</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">Save</span><span class="p">(</span><span class="n">res</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">global</span>  <span class="n">preRes</span>
+</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="n">res</span><span class="o">!=</span><span class="n">preRes</span><span class="p">):</span>
+</span><span class='line'><span class="k">try</span><span class="p">:</span>
+</span><span class='line'>   <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;.\searchLog.dat&#39;</span><span class="p">,</span><span class="s">&#39;a&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+</span><span class='line'>   <span class="k">print</span> <span class="s">&#39;记录文件不存在，创建中。。。&#39;</span>
+</span><span class='line'>   <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;.\searchLog.dat&#39;</span><span class="p">,</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</span><span class='line'><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="c">#和C语言一样，打开文件后一定记得关闭</span>
+</span><span class='line'><span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span class='line'><span class="n">preRes</span> <span class="o">=</span> <span class="n">res</span>
+</span><span class='line'>    <span class="k">return</span> <span class="bp">True</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">OnKeyboardEvent</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">print</span> <span class="s">&quot;WindowName:&quot;</span><span class="p">,</span><span class="n">event</span><span class="o">.</span><span class="n">WindowName</span>
+</span><span class='line'>    <span class="c">#ctrl+z 退出监控程序</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">Ascii</span> <span class="o">==</span> <span class="mi">26</span><span class="p">:</span>
+</span><span class='line'><span class="k">print</span> <span class="s">&#39;exiting...&#39;</span>
+</span><span class='line'>        <span class="c">#停止监控循环</span>
+</span><span class='line'>        <span class="n">win32api</span><span class="o">.</span><span class="n">PostQuitMessage</span><span class="p">()</span>
+</span><span class='line'><span class="c">#sys.exit(1)</span>
+</span><span class='line'>    <span class="k">elif</span> <span class="nb">str</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">WindowName</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;百度搜索&#39;</span><span class="p">):</span>
+</span><span class='line'><span class="n">name</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">WindowName</span>
+</span><span class='line'><span class="c">#从网页题目获得搜索结果</span>
+</span><span class='line'><span class="n">res</span> <span class="o">=</span> <span class="n">name</span><span class="p">[</span><span class="mi">9</span><span class="p">:</span><span class="n">name</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s">&#39; - Google Chrome&#39;</span><span class="p">)]</span>
+</span><span class='line'><span class="n">Save</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</span><span class='line'><span class="k">print</span> <span class="s">&#39;keyboard hook finished--&#39;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="bp">True</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">OnMouseEvent</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">WindowName</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;百度搜索&#39;</span><span class="p">):</span>
+</span><span class='line'><span class="n">name</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">WindowName</span>
+</span><span class='line'><span class="n">res</span> <span class="o">=</span> <span class="n">name</span><span class="p">[</span><span class="mi">9</span><span class="p">:</span><span class="n">name</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s">&#39; - Google Chrome&#39;</span><span class="p">)]</span>
+</span><span class='line'><span class="n">Save</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">print</span> <span class="s">&#39;mouse hook finished--&#39;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="bp">True</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">#pyHook典型用法</span>
+</span><span class='line'><span class="c">#1 定义HookManager</span>
+</span><span class='line'><span class="c">#2将event与handle绑定</span>
+</span><span class='line'><span class="c">#3启动Hook  </span>
+</span><span class='line'><span class="c">#4开始循环获取消息</span>
+</span><span class='line'><span class="n">hm</span><span class="o">=</span><span class="n">pyHook</span><span class="o">.</span><span class="n">HookManager</span><span class="p">()</span>
+</span><span class='line'><span class="n">hm</span><span class="o">.</span><span class="n">KeyDown</span><span class="o">=</span><span class="n">OnKeyboardEvent</span>
+</span><span class='line'><span class="n">hm</span><span class="o">.</span><span class="n">MouseAll</span><span class="o">=</span><span class="n">OnMouseEvent</span>
+</span><span class='line'><span class="n">hm</span><span class="o">.</span><span class="n">HookKeyboard</span><span class="p">()</span>
+</span><span class='line'><span class="n">hm</span><span class="o">.</span><span class="n">HookMouse</span><span class="p">()</span>
+</span><span class='line'><span class="n">pythoncom</span><span class="o">.</span><span class="n">PumpMessages</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
 </div>
   
   
@@ -144,7 +281,7 @@
   </header>
 
 
-  <div class="entry-content">
+  <div class="entry-content"><p>[#请移步至此]<a href="http://fingerliu.github.io/octopress-guide/">http://fingerliu.github.io/octopress-guide/</a></p>
 </div>
   
   
@@ -165,7 +302,7 @@
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2013/05/22/searchhistory/">searchHistory</a>
+        <a href="/blog/2013/05/22/searchhistory/">pySearchHis</a>
       </li>
     
       <li class="post">

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: python | Finger Liu Blog]]></title>
   <link href="http://FingerLiu.github.io/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://FingerLiu.github.io/"/>
-  <updated>2013-05-22T21:51:54+08:00</updated>
+  <updated>2013-05-23T09:16:49+08:00</updated>
   <id>http://FingerLiu.github.io/</id>
   <author>
     <name><![CDATA[Finger Liu]]></name>
@@ -14,20 +14,116 @@
 
   
   <entry>
-    <title type="html"><![CDATA[searchHistory]]></title>
+    <title type="html"><![CDATA[pySearchHis]]></title>
     <link href="http://FingerLiu.github.io/blog/2013/05/22/searchhistory/"/>
     <updated>2013-05-22T21:41:00+08:00</updated>
     <id>http://FingerLiu.github.io/blog/2013/05/22/searchhistory</id>
-    <content type="html"><![CDATA[<h1><em>*</em> coding: utf-8 <em>*</em></h1>
+    <content type="html"><![CDATA[<p>通过hook键盘和鼠标，记录搜索历史记录（hook鼠标还存在问题）
+先只考虑用使用google chrome ，百度搜索的情况
+需要安装pyHook 和 pywin32
+```python searchHis</p>
+
+<h1><em>*</em> coding: utf-8 <em>*</em></h1>
 
 <h1>2013/4/1</h1>
 
-<p>通过hook键盘和鼠标，记录搜索历史记录（hook鼠标还存在问题）
-先只考虑用使用google chrome ，百度搜索的情况
-需要安装pyHook 和 pywin32
-全局变量，用来存放上次搜索结果
-搜索记录保存到文件
-和C语言一样，打开文件后一定记得关闭</p>
+<h1>通过hook键盘和鼠标，记录搜索历史记录（hook鼠标还存在问题）</h1>
+
+<h1>先只考虑用使用google chrome ，百度搜索的情况</h1>
+
+<h1>需要安装pyHook 和 pywin32</h1>
+
+<p>import pyHook,pythoncom
+import sys
+impor win32api</p>
+
+<h1>全局变量，用来存放上次搜索结果</h1>
+
+<p>preRes = &lsquo;solo&rsquo;</p>
+
+<h1>搜索记录保存到文件</h1>
+
+<p>def Save(res):</p>
+
+<pre><code>global  preRes
+if(res!=preRes):
+</code></pre>
+
+<p>try:
+   f = open(&lsquo;.\searchLog.dat&rsquo;,&lsquo;a&rsquo;)
+except IOError:
+   print &lsquo;记录文件不存在，创建中。。。&rsquo;
+   f = open(&lsquo;.\searchLog.dat&rsquo;,&lsquo;w&rsquo;)
+f.write(res)
+f.write(&lsquo;\n&rsquo;)</p>
+
+<h1>和C语言一样，打开文件后一定记得关闭</h1>
+
+<p>f.close()
+preRes = res</p>
+
+<pre><code>return True
+</code></pre>
+
+<p>def OnKeyboardEvent(event):</p>
+
+<pre><code>print "WindowName:",event.WindowName
+#ctrl+z 退出监控程序
+if event.Ascii == 26:
+</code></pre>
+
+<p>print &lsquo;exiting&hellip;&rsquo;</p>
+
+<pre><code>    #停止监控循环
+    win32api.PostQuitMessage()
+</code></pre>
+
+<h1>sys.exit(1)</h1>
+
+<pre><code>elif str(event.WindowName).startswith('百度搜索'):
+</code></pre>
+
+<p>name = event.WindowName</p>
+
+<h1>从网页题目获得搜索结果</h1>
+
+<p>res = name[9:name.rfind(&lsquo; &ndash; Google Chrome&rsquo;)]
+Save(res)
+print &lsquo;keyboard hook finished&mdash;&rsquo;</p>
+
+<pre><code>return True
+</code></pre>
+
+<p>def OnMouseEvent(event):</p>
+
+<pre><code>if str(event.WindowName).startswith('百度搜索'):
+</code></pre>
+
+<p>name = event.WindowName
+res = name[9:name.rfind(&lsquo; &ndash; Google Chrome&rsquo;)]
+Save(res)</p>
+
+<pre><code>print 'mouse hook finished--'
+return True
+</code></pre>
+
+<h1>pyHook典型用法</h1>
+
+<h1>1 定义HookManager</h1>
+
+<h1>2将event与handle绑定</h1>
+
+<h1>3启动Hook</h1>
+
+<h1>4开始循环获取消息</h1>
+
+<p>hm=pyHook.HookManager()
+hm.KeyDown=OnKeyboardEvent
+hm.MouseAll=OnMouseEvent
+hm.HookKeyboard()
+hm.HookMouse()
+pythoncom.PumpMessages()
+```</p>
 ]]></content>
   </entry>
   
