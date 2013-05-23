@@ -4,7 +4,7 @@
   <title><![CDATA[Category: octopress | Finger Liu Blog]]></title>
   <link href="http://FingerLiu.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://FingerLiu.github.io/"/>
-  <updated>2013-05-23T10:52:12+08:00</updated>
+  <updated>2013-05-23T11:46:42+08:00</updated>
   <id>http://FingerLiu.github.io/</id>
   <author>
     <name><![CDATA[Finger Liu]]></name>
@@ -62,7 +62,7 @@
 </code><br/>
  具体请参见<a href="http://xiongbupt.github.io/blog/2012/06/08/octopressdai-ma-gao-liang/">这篇博客</a>  。</p></li>
 <li><p>如果你的系统中安装了python的话，那么你就可以调用python自带的pygment。使用方法为将_config.yml中
-<code >pygments: false # default python pygments have been replaced by pygments.rb</code></p>
+<code>pygments: false # default python pygments have been replaced by pygments.rb</code></p>
 
 <p>  的false改为true。这里需要注意的是，我在我的python27安装目录下找到了pygments，但在python3中并没有。所有建议安装python27后再进行这项修改。</p></li>
 </ol>
