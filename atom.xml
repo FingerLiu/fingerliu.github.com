@@ -4,7 +4,7 @@
   <title><![CDATA[Finger Liu Blog]]></title>
   <link href="http://FingerLiu.github.io/atom.xml" rel="self"/>
   <link href="http://FingerLiu.github.io/"/>
-  <updated>2013-05-23T11:46:42+08:00</updated>
+  <updated>2013-06-01T23:35:45+08:00</updated>
   <id>http://FingerLiu.github.io/</id>
   <author>
     <name><![CDATA[Finger Liu]]></name>
@@ -12,6 +12,17 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[play music with fl studio]]></title>
+    <link href="http://FingerLiu.github.io/blog/2013/06/01/play-music-with-fl-studio/"/>
+    <updated>2013-06-01T23:20:00+08:00</updated>
+    <id>http://FingerLiu.github.io/blog/2013/06/01/play-music-with-fl-studio</id>
+    <content type="html"><![CDATA[<h1>这是将音频文件放到git上的一个测试</h1>
+
+<p><a href="downloads/music/myRthy.mp3">CLick here</a> to download my music &ldquo;myRthy.mp3&rdquo;.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[setting pygments in octopress]]></title>

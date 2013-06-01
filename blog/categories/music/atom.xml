@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: music | Finger Liu Blog]]></title>
+  <link href="http://FingerLiu.github.io/blog/categories/music/atom.xml" rel="self"/>
+  <link href="http://FingerLiu.github.io/"/>
+  <updated>2013-06-01T23:35:45+08:00</updated>
+  <id>http://FingerLiu.github.io/</id>
+  <author>
+    <name><![CDATA[Finger Liu]]></name>
+    <email><![CDATA[solo_o@foxmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[play music with fl studio]]></title>
+    <link href="http://FingerLiu.github.io/blog/2013/06/01/play-music-with-fl-studio/"/>
+    <updated>2013-06-01T23:20:00+08:00</updated>
+    <id>http://FingerLiu.github.io/blog/2013/06/01/play-music-with-fl-studio</id>
+    <content type="html"><![CDATA[<h1>这是将音频文件放到git上的一个测试</h1>
+
+<p><a href="downloads/music/myRthy.mp3">CLick here</a> to download my music &ldquo;myRthy.mp3&rdquo;.</p>
+]]></content>
+  </entry>
+  
+</feed>
